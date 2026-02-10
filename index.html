@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Valentine?</title>
+  <title>For You ❤️</title>
+
   <style>
     body {
       height: 100vh;
@@ -20,19 +21,35 @@
       padding: 40px;
       border-radius: 15px;
       box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+      width: 90%;
+      max-width: 420px;
     }
 
     h1 {
       margin-bottom: 20px;
     }
 
-    button {
-      padding: 12px 25px;
+    p {
       font-size: 18px;
+      line-height: 1.5;
+    }
+
+    button {
+      padding: 12px 20px;
+      font-size: 16px;
       border: none;
       border-radius: 10px;
       cursor: pointer;
       margin: 10px;
+    }
+
+    .option {
+      background-color: #f0f0f0;
+    }
+
+    .envelope {
+      background-color: #ff6f91;
+      color: white;
     }
 
     #yes {
@@ -49,35 +66,112 @@
 </head>
 <body>
 
-  <div class="box">
-    <h1>Vivin, will you be my Valentine? ❤️</h1>
-    <button id="yes">Yes</button>
-    <button id="no">No</button>
-  </div>
+  <div class="box" id="content"></div>
 
   <script>
-    const noBtn = document.getElementById("no");
-    const yesBtn = document.getElementById("yes");
+    let step = 0;
+    const content = document.getElementById("content");
 
-    noBtn.addEventListener("mouseover", () => {
-      const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
-      const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
-      noBtn.style.left = x + "px";
-      noBtn.style.top = y + "px";
-    });
+    const steps = [
+      {
+        html: `
+          <h1>Before you answer…</h1>
+          <p>Let’s rewind us for a moment 💭</p>
+          <button class="option" onclick="next()">Okay</button>
+        `
+      },
+      {
+        html: `
+          <h1>When did you know I was the one?</h1>
+          <button class="option" onclick="next()">Before I even realised it</button>
+          <button class="option" onclick="next()">The day everything changed</button>
+        `
+      },
+      {
+        html: `
+          <h1>What makes us… us?</h1>
+          <button class="option" onclick="next()">Comfort, chaos, and honesty</button>
+          <button class="option" onclick="next()">Knowing without explaining</button>
+        `
+      },
+      {
+        html: `
+          <h1>What do you choose, every time?</h1>
+          <button class="option" onclick="next()">Us</button>
+          <button class="option" onclick="next()">You and me</button>
+        `
+      },
+      {
+        html: `
+          <h1>One last thing…</h1>
+          <p>Choose an envelope 💌</p>
+          <button class="envelope" onclick="openEnvelope(1)">💌 Envelope One</button>
+          <button class="envelope" onclick="openEnvelope(2)">💌 Envelope Two</button>
+        `
+      }
+    ];
 
-    noBtn.addEventListener("click", () => {
-      alert("❌ Unfortunately, fate error: you can't escape 😈");
-    });
+    function next() {
+      step++;
+      content.innerHTML = steps[step].html;
+    }
 
-    yesBtn.addEventListener("click", () => {
-      document.body.innerHTML = `
-        <div style="text-align:center;">
-          <h1>🎉 Yeah! Good boy 😌❤️</h1>
-          <p>You are officially my Valentine 💖</p>
-        </div>
+    function openEnvelope(num) {
+      if (num === 1) {
+        content.innerHTML = `
+          <p>
+            Hey baby ❤️<br>
+            I know I’m not always easy,<br>
+            but thank you for choosing me —<br>
+            every version of me 💗
+          </p>
+          <button class="option" onclick="showValentine()">Continue</button>
+        `;
+      } else {
+        content.innerHTML = `
+          <p>
+            We may not know where we began,<br>
+            or where the road leads next.<br>
+            But I’ll choose my GT,<br>
+            and ride every path with you.
+          </p>
+          <button class="option" onclick="showValentine()">Continue</button>
+        `;
+      }
+    }
+
+    function showValentine() {
+      content.innerHTML = `
+        <h1>So… will you be my Valentine? ❤️</h1>
+        <button id="yes">Yes</button>
+        <button id="no">No</button>
       `;
-    });
+
+      const noBtn = document.getElementById("no");
+      const yesBtn = document.getElementById("yes");
+
+      noBtn.addEventListener("mouseover", () => {
+        const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+        const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+        noBtn.style.left = x + "px";
+        noBtn.style.top = y + "px";
+      });
+
+      noBtn.addEventListener("click", () => {
+        alert("⚠️ That click didn’t work.\nMaybe try listening to your heart this time.");
+      });
+
+      yesBtn.addEventListener("click", () => {
+        document.body.innerHTML = `
+          <div class="box">
+            <h1>❤️ I knew it.</h1>
+            <p>Thank you for choosing me.</p>
+          </div>
+        `;
+      });
+    }
+
+    content.innerHTML = steps[0].html;
   </script>
 
 </body>
